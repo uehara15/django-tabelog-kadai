@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}会社情報{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h1 class="card-title mb-4">{{ company.name }}</h1>
+
+            <p><strong>創立年:</strong> {{ company.founded_year }}</p>
+
+            <p><strong>事業内容:</strong><br>
+                {{ company.description|linebreaks }}
+            </p>
+
+            <p><strong>本社所在地:</strong> {{ company.headquarters }}</p>
+
+            {% if company.website %}
+                <p><strong>公式サイト:</strong>
+                    <a href="{{ company.website }}" target="_blank" rel="noopener noreferrer">
+                        {{ company.website }}
+                    </a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+    <a href="{% url 'shop_list' %}" class="btn btn-secondary">戻る</a>
+</div>
+{% endblock %}

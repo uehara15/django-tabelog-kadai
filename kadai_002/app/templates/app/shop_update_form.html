@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}編集{% endblock %}
+{% block content %}
+<h1>編集</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %} 
+    <br>
+    <a href="{% url 'list' %}">戻る</a>
+    <!-- <input type="submit" class="btn btn-primary" value="更新"> -->
+</form>
+{% endblock %}

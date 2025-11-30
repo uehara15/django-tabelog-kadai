@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}レビュー登録{% endblock %}
+
+{% block content %}
+<h1>{{ shop.name }} - レビュー登録</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">投稿</button>
+</form>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}{{ shop.name }}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+     <div class="mx-auto" style="max-width: 800px;"> 
+
+        <h1>{{ shop.name }}</h1>
+        <img src="{{ shop.img.url }}" alt="{{ shop.name }}" class="img-fluid mb-3">
+
+        <h2>説明</h2>
+        <p>{{ shop.detail|linebreaksbr }}</p>
+
+        <h2>価格</h2>
+        <p>¥{{ shop.price }}</p>
+
+        <h2>営業時間</h2>
+        {% if shop.opening_hours %}
+            <p>{{ shop.opening_hours|linebreaksbr }}</p>
+        {% endif %}
+        {% if shop.closed_days %}
+            <p><strong>定休日：</strong>{{ shop.closed_days }}</p>
+        {% endif %}
+
+
+        <h2>レビュー</h2>
+        <ul class="mb-3 pb-2 border-bottom">
+            {% for review in reviews %}
+                <li>
+                    <strong>{{ review.user.username }}</strong>:
+                    {{ review.content }}（評価: {{ review.rating }}/5）
+
+                    {% if user == review.user %}
+                        <div class="mt-2">
+                            <a href="{% url 'review_edit' review.pk %}" class="btn btn-warning btn-sm">編集</a>
+                            <a href="{% url 'review_delete' review.pk %}" class="btn btn-danger btn-sm">削除</a>
+                        </div>
+                    {% endif %}
+                </li>
+                <hr>
+            {% empty %}
+                <li>まだレビューはありません。</li>
+            {% endfor %}
+        </ul>
+
+        {% if user.is_authenticated %}
+            {% if is_favorite %}
+                <a href="{% url 'remove_favorite' shop.id %}" class="btn btn-outline-danger">
+                    ★ お気に入り解除
+                </a>
+            {% else %}
+                <a href="{% url 'add_favorite' shop.id %}" class="btn btn-outline-secondary">
+                    ☆ お気に入りに追加
+                </a>
+            {% endif %}
+        {% endif %}
+
+
+        {% if user.is_authenticated %}
+            <h3>レビューを書く</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">投稿</button>
+            </form>
+        {% else %}
+            <p><a href="{% url 'login' %}">ログイン</a>してレビューを書きましょう。</p>
+        {% endif %}
+
+        <h2 class="mt-3">
+            <a href="{% url 'make_reservation' shop_id=shop.id %}" class="btn btn-success">予約する</a>
+        </h2>
+
+        <a href="{% url 'shop_list' %}">戻る</a>
+    </div>
+</div>
+{% endblock %}

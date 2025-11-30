@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}レビュー編集{% endblock %}
+
+{% block content %}
+<h2>レビューを編集</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">更新する</button>
+</form>
+
+<div class="mt-3">
+    <a href="{% url 'shop_detail' pk=object.shop.pk %}" class="btn btn-secondary">戻る</a>
+</div>
+
+{% endblock %}

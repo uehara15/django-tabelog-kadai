@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}お気に入り一覧{% endblock %}
+
+{% block content %}
+<h2>お気に入り店舗一覧</h2>
+<hr>
+
+{% if favorites %}
+    <ul class="list-group">
+        {% for fav in favorites %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'shop_detail' fav.shop.id %}">
+                {{ fav.shop.name }}
+            </a>
+
+            <a href="{% url 'remove_favorite' fav.shop.id %}"
+               class="btn btn-sm btn-danger">
+                削除
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+{% else %}
+    <p>お気に入りがありません。</p>
+{% endif %}
+
+{% endblock %}

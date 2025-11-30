@@ -1,0 +1,12 @@
+{% extends 'app/base.html' %}
+{% block title %}予約フォーム{% endblock %}
+
+{% block content %}
+<h1>{{ shop.name }}の予約</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">予約する</button>
+</form>
+{% endblock %}

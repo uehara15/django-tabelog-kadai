@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}レビュー削除{% endblock %}
+
+{% block content %}
+<h2>レビューを削除しますか？</h2>
+
+<p>内容： {{ object.content }}</p>
+<p>評価： {{ object.rating }}/5</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">削除する</button>
+    <a href="{% url 'shop_detail' pk=object.shop.pk %}" class="btn btn-secondary">キャンセル</a>
+</form>
+
+{% endblock %}

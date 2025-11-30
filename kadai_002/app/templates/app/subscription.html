@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}有料会員登録{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow p-4">
+                <h2 class="text-center mb-3">有料会員登録</h2>
+                <p class="text-center text-muted">月額 <strong>¥1,000</strong> で以下のプレミアム機能をご利用いただけます。</p>
+                <p class="text-center text-muted">
+                    月額プランに登録すると、<br>
+                    プレミアム機能をご利用いただけます。
+                </p>
+
+                <form action="{% url 'create_subscription' %}" method="POST" class="text-center mt-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                        月額プランに登録する
+                    </button>
+                </form>
+
+                <p class="text-center text-muted mt-3" style="font-size: 0.9rem;">
+                    ※ 登録ボタンを押すと、決済画面へ移動します。
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

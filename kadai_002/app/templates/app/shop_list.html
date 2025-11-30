@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>店舗一覧</h1>
+
+    <!-- 検索フォーム -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <input type="text" name="keyword" value="{{ request.GET.keyword }}" class="form-control" placeholder="店舗名で検索">
+        </div>
+        <div class="col-md-4">
+            <select name="category_id" class="form-select">
+                <option value="">カテゴリで絞り込み</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id|stringformat:"s" == request.GET.category_id %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">検索</button>
+            <a href="{% url 'shop_list' %}" class="btn btn-secondary">クリア</a>
+        </div>
+    </form>
+
+    <!-- 店舗一覧 -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for shop in shops %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ shop.img.url }}" class="card-img-top" alt="{{ shop.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ shop.name }}</h5>
+                    <p class="card-text">
+                        カテゴリ: 
+                        {% if shop.category %}
+                            {{ shop.category.name }}
+                        {% else %}
+                            未設定
+                        {% endif %}
+                        <br>
+                        住所: {{ shop.address }}<br>
+                        予算: {{ shop.get_budget_display }}
+                    </p>
+                    <a href="{% url 'shop_detail' pk=shop.id %}" class="btn btn-primary">詳細を見る</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>該当する店舗がありません。</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}予約完了{% endblock %}
+
+{% block content %}
+<h1>予約完了</h1>
+<p>{{ reservation.shop.name }} の予約が完了しました。</p>
+<p>予約ID: {{ reservation.id }}</p>
+<a href="{% url 'shop_list' %}" class="btn btn-primary">店舗一覧に戻る</a>
+{% endblock %}
